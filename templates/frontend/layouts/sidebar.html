@@ -1,0 +1,29 @@
+{% load static %}
+{% load humanize %}
+<!-- HEADLINE SIDEBAR -->
+<div class="headline-sidebar">
+  {% include 'frontend/layouts/sidebar_ad.html' %} 
+
+  <div class="header-list">
+    {% for side_bar in side_bar_news %}
+    <div class="header-list-item">
+      <a href="{% url 'post' side_bar.created_at|date:'Y' side_bar.created_at|date:'m' side_bar.created_at|date:'d' side_bar.slug %}"><img src="{{ side_bar.featured_image.url }}" width="100" height="80" /></a>
+      <div class="news-list-detail">
+        <div class="news-list-cat">
+          <span class="cat">{{ side_bar.category }}</span> / 
+          <span class="time">{{ side_bar.created_at|naturaltime }}</span>
+        </div>
+        <a href="{% url 'post' side_bar.created_at|date:'Y' side_bar.created_at|date:'m' side_bar.created_at|date:'d' side_bar.slug %}"
+          >{{side_bar.title}}</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+  <div class="more-headlines">
+    <a href="{% url 'category' 'news' %}">More News <i class="fas fa-arrow-right"></i></a>
+  </div>
+</div>
+</div>
+<!-- HeadLine Contents Ends -->

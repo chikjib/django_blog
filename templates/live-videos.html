@@ -1,0 +1,65 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+ <!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">Live Videos</span>
+    </h4>
+  </div>
+  <!-- HeadLine Container Ends -->
+
+  <!-- HeadLine Contents --> 
+ 
+
+      <!-- Category Posts -->
+  <div class="category-container">
+  <div class="category-posts infinite-container live_videos_container">
+      {% for video_item in page_obj %}
+    <div class="category-post-items infinite-item live-videos">
+      <video width="100%" height="340" controls><source src="{{ video_item.video.url }}" /></video>
+      <div class="category-post-detail">
+      <div class="sponsored-cat">
+        <span class="cat">Live</span> / <span class="time">{{ video_item.created_at|naturaltime }}</span>
+      </div>
+      <h4>{{ video_item.title }}</h4>
+      <p>{{ video_item.description }}</p>
+</div>
+    </div>
+    {% endfor %}
+  </div>
+
+    <!-- HEADLINE SIDEBAR -->
+    <div class="headline-sidebar" id="category-post-sidebar">
+      {% include 'frontend/layouts/single-sidebar_ad.html' %}
+      
+    </div>
+  </div>
+
+  <div class="loading" style="display: none;">
+    Loading...
+</div>
+{% if page_obj.has_next %}  
+<div class="load-more-btn-container">        
+<a class="load-more-btn infinite-more-link" href="?page={{ page_obj.next_page_number }}">More Videos</a>
+</div>
+{% endif %}
+
+
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}

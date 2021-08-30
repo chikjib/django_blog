@@ -1,0 +1,34 @@
+<div class="user-nav" id="user-nav-menu">
+    <ul class="user-nav-items">
+        <li class="{% if request.path == '/accounts/dashboard/' %} active {% endif %}">
+        <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt left-icon"></i> Dashboard</a>
+        </li>
+        <li class="{% if request.path == '/accounts/password_change/' %} active {% endif %}">
+            <a href="{% url 'password_change' %}"><i class="fas fa-edit left-icon"></i> Change Password</a>
+        </li>
+        <li class="{% if request.path == '/accounts/my-referrals/' %} active {% endif %}">
+            <a href="{% url 'referral-list' %}"><i class="fa fa-users left-icon"></i> Affiliates </a>
+            </li>
+        <li class="{% if request.path == '/accounts/wallet/' %} active {% endif %}">
+            <a href="{% url 'wallet' %}"><i class="fas fa-wallet left-icon"></i> Wallet </a>
+            </li>
+        <li class="{% if request.path == '/accounts/add-post/' %} active {% endif %}">
+        <a href="{% url 'add-post' %}"><i class="fas fa-edit left-icon"></i> Add Post</a>
+        </li>
+        <li class="{% if request.path == '/accounts/view-post/' %} active {% endif %}">
+        <a href="{% url 'view-post' %}"><i class="far fa-eye left-icon"></i> View Post</a>
+        </li>
+        <li class="{% if request.path == '/accounts/add-live-events/' %} active {% endif %}">
+            <a href="{% url 'live-events' %}"><i class="fas fa-tv left-icon"></i> Add Live Events</a> 
+        </li>
+        <li class="{% if request.path == '/accounts/view-event/' %} active {% endif %}">
+            <a href="{% url 'view-events' %}"><i class="far fa-eye left-icon"></i> View Live Events</a> 
+        </li>
+        <li class="{% if request.path == '/accounts/support/' %} active {% endif %}">
+            <a href="{% url 'support' %}"><i class="fa fa-life-ring left-icon"></i> Support</a> 
+        </li>
+        <li>
+            <a href="{% url 'logout' %}"><i class="fa fa-key left-icon"></i> Logout</a>
+        </li>
+    </ul>
+</div>

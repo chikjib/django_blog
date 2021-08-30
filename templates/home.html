@@ -1,0 +1,367 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+
+{% include 'frontend/layouts/header_ad.html' %} 
+
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Headlines</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+<!-- HeadLine Contents -->
+<div class="headline-content">
+  <div class="headline-items">
+    {% for post_left in left_side_news %}
+    <a href="{% url 'post' post_left.created_at|date:'Y' post_left.created_at|date:'m' post_left.created_at|date:'d' post_left.slug %}"
+      ><img src="{{ post_left.featured_image.url }}" width="400" height="200"
+    /></a>
+    <div class="news-detail">
+      <div class="news-cat">
+        <span class="cat">{{ post_left.category }}</span> /
+        <span class="time">{{ post_left.created_at|naturaltime }}</span>
+      </div>
+      <a href="{% url 'post' post_left.created_at|date:'Y' post_left.created_at|date:'m' post_left.created_at|date:'d' post_left.slug %}">{{ post_left.title }}</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="headline-items-big">
+    <div class="news-detail-big1">
+      {% for post in breaking_news %}
+      <a href="{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}"
+        ><img src="{{ post.featured_image.url }}" width="560" height="600"
+      /></a>
+      <div class="news-detail-big2">
+        <div class="cat-list-container-big">
+          <span class="news-cat-big">{{ post.category }}</span> /
+          <span class="time-big"> {{ post.created_at|naturaltime }} </span>
+        </div>
+        <a href="{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}">{{ post.title }}</a>
+        <p>{{ post.body|striptags|truncatewords:20 }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- HEADLINE SIDEBAR -->
+  {% include 'frontend/layouts/sidebar.html' %}
+</div>
+<!-- HeadLine Contents Ends -->
+
+<!-- Sponsored Posts -->
+<div class="sponsored-posts">
+  {% for sponsored in sponsored_post %}
+  <div class="sponsored-post-items">
+    <a href="{% url 'post' sponsored.created_at|date:'Y' sponsored.created_at|date:'m' sponsored.created_at|date:'d' sponsored.slug %}"
+      ><img
+        src="{{ sponsored.featured_image.url }}"
+        width="420"
+        height="240"
+        alt=""
+    /></a>
+    <div class="sponsored-cat">
+      <span class="cat">{{ sponsored.category }}</span> /
+      <span class="time">{{ sponsored.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' sponsored.created_at|date:'Y' sponsored.created_at|date:'m' sponsored.created_at|date:'d' sponsored.slug %}">{{sponsored.title}}</a>
+    <p>{{sponsored.body|striptags|truncatewords:20}}</p>
+  </div>
+  {% endfor %}
+</div>
+<!-- Sponsored Posts Ends -->
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Education</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+<!-- Education Posts -->
+<!-- Education Posts -->
+<div class="education-posts">
+  {% for education in education_main%}
+  <div class="education-post-items-big">
+    <div class="education-detail-big1">
+      <a href="{% url 'post' education.created_at|date:'Y' education.created_at|date:'m' education.created_at|date:'d' education.slug %}"
+        ><img
+          src="{{ education.featured_image.url }}"
+          alt=""
+          width="590"
+          height="354"
+      /></a>
+
+      <div class="education-detail-big2">
+        <div class="education-cat">
+          <span class="cat">{{ education.category }}</span> /
+          <span class="time">{{ education.created_at|naturaltime }}</span>
+        </div>
+        <a href="{% url 'post' education.created_at|date:'Y' education.created_at|date:'m' education.created_at|date:'d' education.slug %}">{{education.title}}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Posts Ends -->
+<!-- Education Sub Posts -->
+<div class="education-sub-posts">
+  {% for education_child in education_children %}
+  <div class="education-sub-post-items">
+    <a href="{% url 'post' education_child.created_at|date:'Y' education_child.created_at|date:'m' education_child.created_at|date:'d' education.slug %}"
+      ><img
+        src="{{ education_child.featured_image.url }}"
+        alt=""
+        width="420"
+        height="240"
+    /></a>
+    <div class="education-sub-cat">
+      <span class="cat">{{ education_child.category }}</span> /
+      <span class="time">{{ education_child.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' education_child.created_at|date:'Y' education_child.created_at|date:'m' education_child.created_at|date:'d' education.slug %}">{{ education_child.title }}</a>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Sub Posts Ends -->
+<!-- Sports -->
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Sports</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+<!-- Education Posts -->
+<div class="education-posts">
+  {% for sports in sports_main%}
+  <div class="education-post-items-big">
+    <div class="education-detail-big1">
+      <a href="{% url 'post' sports.created_at|date:'Y' sports.created_at|date:'m' sports.created_at|date:'d' sports.slug %}"
+        ><img
+          src="{{ sports.featured_image.url }}"
+          alt=""
+          width="590"
+          height="354"
+      /></a>
+
+      <div class="education-detail-big2">
+        <div class="education-cat">
+          <span class="cat">{{ sports.category }}</span> /
+          <span class="time">{{ sports.created_at|naturaltime }}</span>
+        </div>
+        <a href="{% url 'post' sports.created_at|date:'Y' sports.created_at|date:'m' sports.created_at|date:'d' sports.slug %}">{{sports.title}}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Posts Ends -->
+<!-- Education Sub Posts -->
+<div class="education-sub-posts">
+  {% for sports_child in sports_children %}
+  <div class="education-sub-post-items">
+    <a href="{% url 'post' sports_child.created_at|date:'Y' sports_child.created_at|date:'m' sports_child.created_at|date:'d' sports_child.slug %}"
+      ><img
+        src="{{ sports_child.featured_image.url }}"
+        alt=""
+        width="420"
+        height="240"
+    /></a>
+    <div class="education-sub-cat">
+      <span class="cat">{{ sports_child.category }}</span> /
+      <span class="time">{{ sports_child.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' sports_child.created_at|date:'Y' sports_child.created_at|date:'m' sports_child.created_at|date:'d' sports_child.slug %}">{{ sports_child.title }}</a>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Sub Posts Ends -->
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Entertainment</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+<!-- Education Posts -->
+<div class="education-posts">
+  {% for entertainment in entertainment_main%}
+  <div class="education-post-items-big">
+    <div class="education-detail-big1">
+      <a href="{% url 'post' entertainment.created_at|date:'Y' entertainment.created_at|date:'m' entertainment.created_at|date:'d' entertainment.slug %}"
+        ><img
+          src="{{ entertainment.featured_image.url }}"
+          alt=""
+          width="590"
+          height="354"
+      /></a>
+
+      <div class="education-detail-big2">
+        <div class="education-cat">
+          <span class="cat">{{ entertainment.category }}</span> /
+          <span class="time">{{ entertainment.created_at|naturaltime }}</span>
+        </div>
+        <a href="{% url 'post' entertainment.created_at|date:'Y' entertainment.created_at|date:'m' entertainment.created_at|date:'d' entertainment.slug %}">{{entertainment.title}}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Posts Ends -->
+<!-- Education Sub Posts -->
+<div class="education-sub-posts">
+  {% for entertainment_child in entertainment_children %}
+  <div class="education-sub-post-items">
+    <a href="{% url 'post' entertainment_child.created_at|date:'Y' entertainment_child.created_at|date:'m' entertainment_child.created_at|date:'d' entertainment_child.slug %}"
+      ><img
+        src="{{ entertainment_child.featured_image.url }}"
+        alt=""
+        width="420"
+        height="240"
+    /></a>
+    <div class="education-sub-cat">
+      <span class="cat">{{ entertainment_child.category }}</span> /
+      <span class="time">{{ entertainment_child.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' entertainment_child.created_at|date:'Y' entertainment_child.created_at|date:'m' entertainment_child.created_at|date:'d' entertainment_child.slug %}">{{ entertainment_child.title }}</a>
+  </div>
+  {% endfor %}
+</div>
+<!-- Education Sub Posts Ends -->
+
+<!-- Health -->
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Health</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+
+<!-- Sponsored Posts -->
+<div class="sponsored-posts">
+  {% for health in healths %}
+  <div class="sponsored-post-items">
+    <a href="{% url 'post' health.created_at|date:'Y' health.created_at|date:'m' health.created_at|date:'d' health.slug %}"
+      ><img
+        src="{{ health.featured_image.url }}"
+        width="420"
+        height="240"
+        alt=""
+    /></a>
+    <div class="sponsored-cat">
+      <span class="cat">{{ health.category }}</span> /
+      <span class="time">{{ health.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' health.created_at|date:'Y' health.created_at|date:'m' health.created_at|date:'d' health.slug %}">{{health.title}}</a>
+  </div>
+  {% endfor %}
+</div>
+<!-- Sponsored Posts Ends -->
+
+<!-- Life Style -->
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Life Style</span>
+  </h4>
+</div>
+<!-- HeadLine Container Ends -->
+
+<!-- Sponsored Posts -->
+<div class="sponsored-posts">
+  {% for lifestyle in lifestyles %}
+  <div class="sponsored-post-items">
+    <a href="{% url 'post' lifestyle.created_at|date:'Y' lifestyle.created_at|date:'m' lifestyle.created_at|date:'d' lifestyle.slug %}"
+      ><img
+        src="{{ lifestyle.featured_image.url }}"
+        width="420"
+        height="240"
+        alt=""
+    /></a>
+    <div class="sponsored-cat">
+      <span class="cat">{{ lifestyle.category }}</span> /
+      <span class="time">{{ lifestyle.created_at|naturaltime }}</span>
+    </div>
+    <a href="{% url 'post' lifestyle.created_at|date:'Y' lifestyle.created_at|date:'m' lifestyle.created_at|date:'d' lifestyle.slug %}">{{lifestyle.title}}</a>
+  </div>
+  {% endfor %}
+</div>
+<!-- Sponsored Posts Ends -->
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Live Videos</span>
+  </h4>
+</div>
+<div class="education-posts">
+  {% for live in lives %}
+  <div class="education-post-items-big">
+    <div class="education-detail-big1">
+    <video width="590" height="354" controls>
+      <source
+        src="{{ live.video.url }}"
+      >
+    </video>
+
+      <div class="education-detail-big2 onhover">
+        <div class="education-cat">
+			<span class="cat">Live</span> /
+          <span class="time">{{ live.created_at|naturaltime }}</span>
+        </div>
+        <a href="#">{{live.title}}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="education-posts">
+  {% for live_extra in live_extras %}
+  <div class="education-post-items-big">
+    <div class="education-detail-big1">
+      <video width="590" height="354" controls>
+        <source   
+          src="{{ live_extra.video.url }}"
+        >
+      </video>
+      
+
+      <div class="education-detail-big2 onhover">
+        <div class="education-cat">
+			<span class="cat">Live</span> /
+          <span class="time">{{ live_extra.created_at|naturaltime }}</span>
+        </div>
+        <a href="#">{{live_extra.title}}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% if live_count > 4 %}
+<div class="more-headlines">
+  <a href="{% url 'live_videos' %}">View More <i class="fas fa-arrow-right"></i></a>
+</div>
+{% endif %}
+<div class="extra-space"></div>
+{% endblock %}

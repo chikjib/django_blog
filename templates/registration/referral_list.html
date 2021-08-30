@@ -1,0 +1,69 @@
+{% extends 'frontend/layouts/base.html' %} {% block content %} {% load static %}
+{% load humanize %} {% load widget_tweaks %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+  <!-- HeadLines -->
+  <div class="headline"></div>
+  <h4 class="headline-title">
+    <span class="headline-title">Referral List</span>
+  </h4>
+  <div class="right-bar" id="user-nav-mobile">
+    <span class="fas fa-bars "></span>
+  </div>
+</div>
+<!-- HeadLine Container Ends -->
+{% include "registration/welcome_menu.html" %}
+
+<div class="user-dashboard-container">
+  <!-- User Navigation -->
+  {% include "registration/user-nav.html" %}
+
+  <!-- Single User Page -->
+  <div class="user-detail-container">
+
+
+    <div class="user-details">
+      <table class="table table-responsive" id="example">
+       <thead>
+           <th>S/N</th>
+           <th>Full Name</th>
+           <th>Username</th>
+           <th>Email</th>
+       </thead>
+       <tbody>
+           {% for downline in page_obj %}
+           <tr>
+               <td>{{ forloop.counter }}</td>
+               <td>{{ downline.user.get_full_name }}</td>
+               <td>{{ downline.user.username }}</td>
+               <td>{{ downline.user.email }}</td>
+           </tr>
+           {% endfor %}
+       </tbody>
+      </table>
+      <!-- {% if page_obj %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %} -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

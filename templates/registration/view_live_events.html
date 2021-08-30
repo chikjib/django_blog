@@ -1,0 +1,95 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">Live Events</span>
+    </h4>
+    <div class="right-bar" id="user-nav-mobile">
+        <span class="fas fa-bars "></span>
+      </div>
+  </div>
+  <!-- HeadLine Container Ends -->
+  {% include "registration/welcome_menu.html" %}
+
+  <div class="user-dashboard-container">
+      <!-- User Navigation -->
+      {% include "registration/user-nav.html" %}
+
+      <!-- Single User Page -->
+      <div class="user-detail-container">
+          
+          <!-- <div class="user-avatar-box">
+              {% if user.profile.profile_picture.url is None %}
+              <img src="{% static 'frontend/img/placeholder.jpg' %}" class="avatar" alt=""> 
+              {% else %}
+              <img src="{{ user.profile.profile_picture.url }}" class="avatar" alt=""> 
+              {% endif %}
+              <div class="wallet-section">
+                  <p>Activity Earnings (in points) : 2000 pts </p>
+                  <p>Referral Earnings (in points): 20pts </p>
+                  <p>Wallet Balance (after conversion): &#8358;2,000 </p>
+              </div>
+          </div> -->
+          
+          <div class="user-details">
+              <table class="table table-responsive table-striped" id="example">
+                  <thead>
+                      <th>S/N</th>
+                      <th>Title</th>
+                      <th>Video</th>
+                      <th>Approved?</th>
+                      <th>Created</th>
+                      <th>Action(s)</th>
+                  </thead>
+
+                  <tbody>
+                    
+                        {% for live_event in page_obj %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ live_event.title}}</td>
+                            <td><video width="100%" controls><source src="{{ live_event.video.url }}" type="video/mp4">Your browser does not support the video tag.</video></td>
+                            <td>{% if live_event.status == '1' %} Yes {% else %} No {% endif %}</td>
+                            <td>{{ live_event.created_at|date:'Y-m-d' }}</td>
+                            <td>
+                                <a href="{% url 'edit-event' live_event.pk %}"><i class="fas fa-edit"></i></a>
+                                <!-- <a href="{% url 'delete-event' live_event.pk %}"><i class="fas fa-trash"></i></a> -->
+                            
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    
+                  </tbody>
+              </table>
+              <!-- {% if page_obj %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %} -->
+          </div>
+      </div>
+  </div>
+ 
+  {% endblock %}

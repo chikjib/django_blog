@@ -1,0 +1,42 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">Member Area</span>
+    </h4>
+  </div>
+  <!-- HeadLine Container Ends -->
+
+  <div class="login-container">
+      <div class="login-wrapper">
+          <form method="POST">
+            {% csrf_token %}
+            {% if form.errors %}
+            <p class="alert alert-danger">Your username and password didn't match. Please try again.
+            </p>
+            {% endif %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                 {{ field|add_class:"form-control" }}
+            </div>
+            {% endfor %}
+          
+              <div class="form-group">
+                  <input type="submit" value="Login" class="btn btn-dark mbtn">
+              </div>
+
+              <p>Forgot Password? <a href="{% url 'password_reset' %}" class="forgot-password">Click here to reset</a></p>
+                  <p>Don't have account?  <a href="{% url 'register' %}" class="register">Create Account</a></p> 
+          </form>
+      </div>
+  </div>
+  {% endblock %}

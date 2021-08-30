@@ -1,0 +1,176 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">Create Account</span>
+    </h4>
+  </div>
+  <!-- HeadLine Container Ends -->
+
+  <div class="login-container">
+      <div class="login-wrapper">
+          <form method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="referral-code"/>
+              {% csrf_token %}
+
+
+              {% if messages %}
+              {% for message in messages %}
+                {% if message.tags == 'warning' %} 
+                  <p class="alert alert-danger">{{ message }}</p>
+                  {% elif message.tags == 'success' %}
+                  <p class="alert alert-success">{{ message }}</p>
+                {% endif %}
+              {% endfor %}
+              
+              {% endif %}
+
+              {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+              {% endfor %}
+            
+
+
+            
+              <div class="form-group">
+                <label for="username">User Type: </label>
+                {{ form.user_type|add_class:"form-control" }}
+                {% if form.user_type.help_text %}
+                <small style="color: grey">{{ form.user_type.help_text }}</small>
+                {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="username">Username: </label>
+                {{ form.username|add_class:"form-control" }}
+                {% if form.username.help_text %}
+                <small style="color: grey">{{ form.username.help_text }}</small>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                  <label for="firstname">Firstname:</label>
+                  {{ form.first_name|add_class:"form-control"|attr:"required" }}
+                  {% if form.first_name.help_text %}
+                  <small style="color: grey">{{ form.first_name.help_text }}</small>
+                  {% endif %}
+              </div> 
+
+              <div class="form-group">
+                  <label for="lastname">Lastname:</label>
+                  {{ form.last_name|add_class:"form-control"|attr:"required" }}
+                  {% if form.last_name.help_text %}
+                  <small style="color: grey">{{ form.last_name.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="email">Email Address:</label>
+                  {{ form.email|add_class:"form-control"|attr:"required" }}
+                  {% if form.email.help_text %}
+                  <small style="color: grey">{{ form.email.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="password">Password:</label>
+                  {{ form.password1|add_class:"form-control"|attr:"required" }}
+                  {% if form.password1.help_text %}
+                  <small style="color: grey">{{ form.password1.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="password">Confirm Password:</label>
+                  {{ form.password2|add_class:"form-control"|attr:"required" }}
+                  {% if form.password2.help_text %}
+                  <small style="color: grey">{{ form.password2.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                <label for="email">Phone Number: </label>
+                {{ form.phone_no|add_class:"form-control"|attr:"required" }}
+                {% if form.phone_no.help_text %}
+                  <small style="color: grey">{{ form.phone_no.help_text }}</small>
+                  {% endif %}
+            </div> 
+              <div class="form-group">
+                  <label for="dob">Date of Birth: </label>
+                  {{ form.dob|add_class:"form-control"|attr:"required" }}
+                {% if form.dob.help_text %}
+                  <small style="color: grey">{{ form.dob.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="account_name">Bank Account Name: </label>
+                  {{ form.account_name|add_class:"form-control"|attr:"required" }}
+                {% if form.account_name.help_text %}
+                  <small style="color: grey">{{ form.account_name.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="account_number">Bank Account Number: </label>
+                  {{ form.bank_account|add_class:"form-control"|attr:"required" }}
+                {% if form.bank_account.help_text %}
+                  <small style="color: grey">{{ form.bank_account.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="bank_name">Bank Name:</label>
+                  {{ form.bank_name|add_class:"form-control"|attr:"required" }}
+                {% if form.bank_name.help_text %}
+                  <small style="color: grey">{{ form.bank_name.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="country">Country:</label>
+                  <select name="country" required id='countryId' class="form-control countries">
+                    <option value="">Select Country</option>
+                  </select>
+                  <!-- {{ form.country|add_class:"form-control countries"|attr:"id:countryId"|attr:"required" }} -->
+                {% if form.country.help_text %}
+                  <small style="color: grey">{{ form.country.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="state">State</label>
+                  <select name="state" required id='stateId' class="form-control states">
+                    <option value="">Select State</option>
+                  </select>
+                  <!-- {{ form.state|add_class:"form-control states"|attr:"id:stateId"|attr:"required" }} -->
+                {% if form.state.help_text %}
+                  <small style="color: grey">{{ form.state.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="city">City</label>
+                  <select name="city" required id='cityId' class="form-control cities">
+                    <option value="">Select City</option>
+                  </select>
+                  <!-- {{ form.city|add_class:"form-control cities"|attr:"id:cityId"|attr:"required" }} -->
+                {% if form.city.help_text %}
+                  <small style="color: grey">{{ form.city.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                  <label for="Profile picture">Profile picture: </label>
+                  {{ form.profile_picture|add_class:"form-control" }}
+                {% if form.profile_picture.help_text %}
+                  <small style="color: grey">{{ form.profile_picture.help_text }}</small>
+                  {% endif %}
+              </div> 
+              <div class="form-group">
+                <input type="submit" value="Create Account" class="btn btn-dark mbtn">
+            </div>
+          </form>
+      </div>
+  </div>
+  {% endblock %}

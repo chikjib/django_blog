@@ -1,0 +1,245 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+
+<!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">{{ post_title.category }}</span>
+    </h4>
+  </div>
+  <!-- HeadLine Container Ends -->
+
+  <!-- HeadLine Contents --> 
+  <div class="post-title">
+    <div class="post-title-content">
+    <h1>{{ post.title }}</h1>
+    <div class="pub-time"><span class="fa fa-clock "></span><span class="intro"> Published on: </span><span class="detail"> {{ post.created_at|date:'F d, Y' }}</span> </div>
+    <div class="by"><span class="fa fa-user "></span><span class="intro"> By: </span><span class="detail-user"> {{ post.user.get_full_name }}</span> </div>
+    <div class="by"><span class="fa fa-edit "></span><span class="intro"> Comments: </span><span class="detail-user"> {{ comments.count }}</span> </div>
+  </div>  
+  </div>  
+  <div class="headline-content" id="single-headline-content">
+    <div class="single-post-headline-items-big">
+      <div class="single-news-detail-big1">
+        <img src="{{ post.featured_image.url }}" width="820" />
+        {% autoescape off %}
+        {{ post.body }}
+        {% endautoescape %}
+      </div>
+      
+      <div class="share-post-container">
+        <div class="social-heading">
+          <h4>Share this Post</h4>
+        </div>
+          <ul class="social-share">
+            
+            <li  class="share-wrap"><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.META.HTTP_HOST }}{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}" target="_blank"  rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
+
+            <li  class="share-wrap"><a href="https://twitter.com/intent/tweet?text={{ post.body|striptags|truncatewords:50 }}" target="_blank"  rel="noopener"><i class="fab fa-twitter"></i></a></li>
+         
+            <li  class="share-wrap"><a href="http://pinterest.com/pin/create/link/?url={{ request.META.HTTP_HOST }}{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}" target="_blank"  rel="noopener""><i class="fab fa-pinterest"></i></a></li>
+          </ul>
+          
+      </div>
+      <div class="comment-heading">Comments</div>
+      <div class="comment-container infinite-container">
+      {% for comment in page_obj %}
+      <div class="comment-box infinite-item">
+        <div class="avatar-box">
+          <img src="{{ comment.user.profile.profile_picture.url }}" class="avatar rounded-circle"  alt="avatar">
+        </div>
+        <div class="comment-body">
+          <div class="author">{{ comment.user.get_full_name }}  | <span class="comment-time"><i class="fas fa-clock "></i> {{ comment.created_at|naturaltime }}</span></div>
+         <div class="comment-text">{{ comment.comment_body }}</div>
+        </div>
+      </div>
+    
+      {% endfor %}
+    </div>
+
+      <div class="loading" style="display: none;">
+        Loading...
+        </div>
+<div class="comment-pagination">
+      {% if page_obj.has_next %}  
+            
+      <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">Load More</a>
+      {% endif %}
+            </div>
+
+     
+      <!-- Comment form -->
+      {% if request.user.is_authenticated %}
+      <div class="comment-form">
+        <div class="comment-form-heading">Leave a Reply</div>
+        <p>Your email address will not be published. Required fields are marked *</p>
+        <form  method="post" class="form-group">
+            {% csrf_token %}
+
+            {% if messages %}
+                    {% for message in messages %} 
+                        <p class="alert alert-danger">{{ message }}</p>
+                    {% endfor %}
+            {% endif %}
+            {{ form.post|attr:"hidden" }}
+
+            {{ form.user|attr:"hidden" }}
+            {{ form.user.email|attr:"hidden" }}
+          <div class="form-group">
+            <label for="comment">Comment: *</label>
+            {{ form.comment_body|add_class:"form-control" }}
+            <!-- <textarea name="body" class="form-control" id="" cols="30" rows="10"></textarea> -->
+          </div>
+          <div class="form-group clear-fix">
+            <input type="submit" value="Submit" class="btn btn-dark">
+          </div>
+        </form>
+      </div>
+      {% endif %}
+      <!-- related post -->
+    
+      <div class="related-post">
+        {% for previous in related_previous %}
+        <a href="{% url 'post' previous.created_at|date:'Y' previous.created_at|date:'m' previous.created_at|date:'d' previous.slug %}"><span class="fa fa-chevron-left left"></span></a>
+        <div class="related-previous-post">
+            
+          <a href="{% url 'post' previous.created_at|date:'Y' previous.created_at|date:'m' previous.created_at|date:'d' previous.slug %}">
+              <span class="dont-miss">Don't Miss</span>
+         </a> 
+          <p><a href="{% url 'post' previous.created_at|date:'Y' previous.created_at|date:'m' previous.created_at|date:'d' previous.slug %}">
+             {{previous.title}}</a>
+            </p>
+          
+        </div>
+        {% endfor %}
+        {% for next in related_next %}
+        <div class="related-next-post">
+            
+          <a href="{% url 'post' next.created_at|date:'Y' next.created_at|date:'m' next.created_at|date:'d' next.slug %}"><span class="up-next">Up Next</span></a>
+          <p><a href="{% url 'post' next.created_at|date:'Y' next.created_at|date:'m' next.created_at|date:'d' next.slug %}">
+              {{ next.title }}</a>
+            </p>
+            
+        </div>
+        <a href="{% url 'post' next.created_at|date:'Y' next.created_at|date:'m' next.created_at|date:'d' next.slug %}"><span class="fa fa-chevron-right right"></span></a>
+      {% endfor %}
+    </div>
+      
+
+      <div class="headline-container" id="may-like-container">
+        <!-- HeadLines -->
+        <div class="headline"></div>
+        <h4 class="headline-title">
+          <span class="headline-title">You may like</span>
+        </h4>
+      </div>
+
+      <!-- Sponsored Posts -->
+  <div class="sponsored-posts" id="may-like-post">
+    {% for related_post in related_posts %}
+    <div class="sponsored-post-items" id="maylike">
+      <a href="{% url 'post' related_post.created_at|date:'Y' related_post.created_at|date:'m' related_post.created_at|date:'d' related_post.slug %}">
+          <img src="{{ related_post.featured_image.url }}" alt="" width="400" height="240" /></a>
+     
+      <a href="{% url 'post' related_post.created_at|date:'Y' related_post.created_at|date:'m' related_post.created_at|date:'d' related_post.slug %}"
+        >{{related_post.title}}</a
+      >
+
+    </div>  
+    {% endfor %}
+  </div>
+  <!-- Sponsored Posts Ends -->
+      <!-- Sponsored Posts -->
+      <div class="sponsored-posts" id="may-like-post">
+        {% for post_extra in related_post_extras %}
+        <div class="sponsored-post-items" id="maylike">
+          <a href="{% url 'post' post_extra.created_at|date:'Y'  post_extra.created_at|date:'m'  post_extra.created_at|date:'d'  post_extra.slug %}">
+              <img src="{{  post_extra.featured_image.url }}" alt="" width="400" height="240" /></a>
+         
+          <a href="{% url 'post'  post_extra.created_at|date:'Y'  post_extra.created_at|date:'m'  post_extra.created_at|date:'d'  post_extra.slug %}"
+            >{{ post_extra.title}}</a>
+    
+        </div>  
+        {% endfor %}
+      </div>
+  <!-- Sponsored Posts Ends -->
+    </div>
+
+    
+    <!-- HEADLINE SIDEBAR -->
+    <div class="headline-sidebar" id="single-post-sidebar">
+      {% include 'frontend/layouts/single-sidebar_ad.html' %}
+      
+    </div>
+  </div>
+  <!-- HeadLine Contents Ends -->
+  <div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">Trending</span>
+    </h4>
+  </div>
+<!-- Education Sub Posts -->
+<div class="education-sub-posts" id="trending">
+    {% for trend in trending %}
+    <div class="education-sub-post-items">
+      <a href="{% url 'post' trend.created_at|date:'Y' trend.created_at|date:'m' trend.created_at|date:'d' trend.slug %}"
+        ><img
+          src="{{ trend.featured_image.url }}"
+          alt=""
+          width="420"
+          height="240"
+      /></a>
+      <div class="education-sub-cat">
+        <span class="cat">{{ trend.category }}</span> /
+        <span class="time">{{ trend.created_at|naturaltime }}</span>
+      </div>
+      <a href="{% url 'post' trend.created_at|date:'Y' trend.created_at|date:'m' trend.created_at|date:'d' trend.slug %}">
+          {{ trend.title }}</a>
+    </div>
+    {% endfor %}
+  </div>
+<!-- Education Sub Posts Ends -->
+  <!-- Education Sub Posts -->
+  <div class="education-sub-posts" id="trending_extra">
+    {% for trend_extra in trending_extras %}
+    <div class="education-sub-post-items">
+      <a href="{% url 'post' trend_extra.created_at|date:'Y' trend_extra.created_at|date:'m' trend_extra.created_at|date:'d' trend_extra.slug %}"
+        ><img
+          src="{{ trend_extra.featured_image.url }}"
+          alt=""
+          width="420"
+          height="240"
+      /></a>
+      <div class="education-sub-cat">
+        <span class="cat">{{ trend_extra.category }}</span> /
+        <span class="time">{{ trend_extra.created_at|naturaltime }}</span>
+      </div>
+      <a href="{% url 'post' trend_extra.created_at|date:'Y' trend_extra.created_at|date:'m' trend_extra.created_at|date:'d' trend_extra.slug %}">
+          {{ trend_extra.title }}</a>
+    </div>
+    {% endfor %}
+  </div>
+<!-- Education Sub Posts Ends -->
+
+<script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+
+{% endblock %}

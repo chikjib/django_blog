@@ -1,0 +1,18 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+ <!-- HeadLine Container -->
+
+ <div class="single-page">
+    <div class="page-header">
+    <h1>About Us</h1>
+</div>
+<div class="page-content">
+    {% autoescape off %}
+    {{ page_content.page_content }}
+    {% endautoescape %}
+</div>
+</div>
+
+{% endblock %}

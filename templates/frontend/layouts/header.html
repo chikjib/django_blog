@@ -1,0 +1,229 @@
+{% load static %}
+{% load humanize %}
+<body>
+  <!-- Top Header  -->
+  <div class="top-header">
+    <div class="top-header-nav">
+      <!-- Navbar Toggle -->
+
+      <a class="navbar-toggle" id="modal-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </a>
+
+      <div id="myModal" class="modal">
+        <!-- Navbar Toggle Ends -->
+        <div class="menu-modal-content">
+          <div class="modal-header">
+            <div class="modal-logo">
+              <a href="{% url 'home' %}"><img src="{% static 'frontend/img/logo.png' %}" class="logo" /></a>
+            </div>
+            <span class="close">&times;</span>
+          </div>
+          <ul class="modal-menu-container">
+            <li class="modal-item">
+              <a href="{% url 'home' %}" id="home">Home</a>
+            </li>
+            <li class="modal-item">
+              <a href="/news/" id="news">News</a>
+            </li>
+            <li class="modal-item">
+              <a href="/sports/" id="sports">Sports</a>
+            </li>
+            <li class="modal-item">
+              <a href="/entertainment/" id="entertainment">Entertainment</a>
+            </li>
+            <li class="modal-item">
+              <a href="/education/" id="education">Education</a>
+            </li>
+            <li class="modal-item">
+              <a href="/health/" id="health">Health</a>
+            </li>
+            <li class="modal-item">
+              <a href="/life-style/" id="lifestyle">LifeStyle</a>
+            </li>
+            <li class="modal-item">
+              {% if request.user.is_authenticated is not True %}
+              <a href="{% url 'login' %}" id="login">Login</a> / <a href="/life-style/" id="register">Register</a>
+              {% else %}
+              <a href="{% url 'logout' %}" id="logout">Logout</a> / <a href="{% url 'dashboard' %}" id="dashboard">Dashboard</a>
+              {% endif %}
+            </li>
+           
+          </ul>
+
+          <div class="modal-social-icons">
+            <span class="social-icon-head">Connect with us</span>
+            <div class="social-items">
+              <div class="modal-social-facebook">
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+              </div>
+              <div class="modal-social-twitter">
+                <a href=""><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Navbar Logo -->
+      <div class="navbar-logo" id="navbar-logo">
+        <a href="{% url 'home' %}"><img src="{% static 'frontend/img/logo.png' %}" class="logo" /></a>
+      </div>
+      <!-- Navbar Logo Ends -->
+
+      <div class="navbar-menu-container">
+        <ul class="navbar-menu">
+          <li class="navbar-item">
+            <a href="{% url 'home' %}" id="home">Home</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/news/" id="news">News</a>
+          
+          <div class="dropdown-content"> 
+            <div class="dropdown-box">
+                  {% for news_item in news %}
+                  <div class="dropdown-items">
+                    <a href="{% url 'post' news_item.created_at|date:'Y' news_item.created_at|date:'m' news_item.created_at|date:'d' news_item.slug %}"
+                      ><img
+                        src="{{ news_item.featured_image.url }}"
+                        width="420"
+                        height="240"
+                        alt=""
+                    /></a>
+                    <a href="{% url 'post' news_item.created_at|date:'Y' news_item.created_at|date:'m' news_item.created_at|date:'d' news_item.slug %}"><p>{{news_item.title}}</p></a>
+                  </div>
+                  {% endfor %}
+            </div>     
+          </div>
+        </li>
+          <li class="navbar-item">
+            <a href="/sports/" id="sports">Sports</a>
+            <div class="dropdown-content"> 
+              <div class="dropdown-box">
+                    {% for sport_item in sports %}
+                    <div class="dropdown-items">
+                      <a href="{% url 'post' sport_item.created_at|date:'Y' sport_item.created_at|date:'m' sport_item.created_at|date:'d' sport_item.slug %}"
+                        ><img
+                          src="{{ sport_item.featured_image.url }}"
+                          width="420"
+                          height="240"
+                          alt=""
+                      /></a>
+                      <a href="{% url 'post' sport_item.created_at|date:'Y' sport_item.created_at|date:'m' sport_item.created_at|date:'d' sport_item.slug %}"><p>{{sport_item.title}}</p></a>
+                    </div>
+                    {% endfor %}
+              </div>     
+            </div>
+          </li>
+          <li class="navbar-item">
+            <a href="/entertainment/" id="entertainment">Entertainment</a>
+            <div class="dropdown-content"> 
+              <div class="dropdown-box">
+                    {% for entertainment_item in entertainment %}
+                    <div class="dropdown-items">
+                      <a href="{% url 'post' entertainment_item.created_at|date:'Y' entertainment_item.created_at|date:'m' entertainment_item.created_at|date:'d' entertainment_item.slug %}"
+                        ><img
+                          src="{{ entertainment_item.featured_image.url }}"
+                          width="420"
+                          height="240"
+                          alt=""
+                      /></a>
+                      <a href="{% url 'post' entertainment_item.created_at|date:'Y' entertainment_item.created_at|date:'m' entertainment_item.created_at|date:'d' entertainment_item.slug %}">
+                        <p>{{entertainment_item.title}}</p></a>
+                    </div>
+                    {% endfor %}
+              </div>     
+            </div>
+          </li>
+          <li class="navbar-item">
+            <a href="/education/" id="education">Education</a>
+            <div class="dropdown-content"> 
+              <div class="dropdown-box">
+                    {% for education_item in education %}
+                    <div class="dropdown-items">
+                      <a href="{% url 'post' education_item.created_at|date:'Y' education_item.created_at|date:'m' education_item.created_at|date:'d' education_item.slug %}"
+                        ><img
+                          src="{{ education_item.featured_image.url }}"
+                          width="420"
+                          height="240"
+                          alt=""
+                      /></a>
+                      <a href="{% url 'post' education_item.created_at|date:'Y' education_item.created_at|date:'m' education_item.created_at|date:'d' education_item.slug %}"><p>{{education_item.title}}</p></a>
+                    </div>
+                    {% endfor %}
+              </div>     
+            </div>
+          </li>
+          <li class="navbar-item">
+            <a href="/health/" id="health">Health</a>
+            <div class="dropdown-content"> 
+              <div class="dropdown-box">
+                    {% for health_item in health %}
+                    <div class="dropdown-items">
+                      <a href="{% url 'post' health_item.created_at|date:'Y' health_item.created_at|date:'m' health_item.created_at|date:'d' health_item.slug %}"
+                        ><img
+                          src="{{ health_item.featured_image.url }}"
+                          width="420"
+                          height="240"
+                          alt=""
+                      /></a>
+                      <a href="{% url 'post' health_item.created_at|date:'Y' health_item.created_at|date:'m' health_item.created_at|date:'d' health_item.slug %}"><p>{{health_item.title}}</p></a>
+                    </div>
+                    {% endfor %}
+              </div> 
+          </li>
+          <li class="navbar-item">
+            <a href="/life-style/" id="lifestyle">LifeStyle</a>
+            <div class="dropdown-content"> 
+              <div class="dropdown-box">
+                    {% for lifestyle_item in lifestyle %}
+                    <div class="dropdown-items">
+                      <a href="{% url 'post' lifestyle_item.created_at|date:'Y' lifestyle_item.created_at|date:'m' lifestyle_item.created_at|date:'d' lifestyle_item.slug %}"
+                        ><img
+                          src="{{ lifestyle_item.featured_image.url }}"
+                          width="420"
+                          height="240"
+                          alt=""
+                      /></a>
+                      <a href="{% url 'post' lifestyle_item.created_at|date:'Y' lifestyle_item.created_at|date:'m' lifestyle_item.created_at|date:'d' lifestyle_item.slug %}">
+                        <p>{{lifestyle_item.title}}</p></a>
+                    </div>
+                    {% endfor %}
+              </div>     
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Navbar Items Ends -->
+      <div class="search-bar">
+        <span class="fa fa-search" id="searchBtn"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mySearchModal" id="mySearchModal">
+    <div class="searchModalContent">
+      <span class="search-close">&times;</span>
+        <form action="{% url 'search_results' %}" id="searchform" method="GET">
+      <input
+        type="text"
+        name="s"
+        id="s"
+        placeholder="Search"
+        onfocus='if (!window.__cfRLUnblockHandlers) return false; if (this.value == "Search") { this.value = ""; }'
+        onblur='if (!window.__cfRLUnblockHandlers) return false; if (this.value == "") { this.value = "Search"; }'
+      />
+      </form>
+    </div>
+  </div>
+  <!-- Top Header Ends -->
+  <div class="account-section">
+    <div class="account-container">
+      {% if request.user.is_authenticated is not True %}
+        <p class="account-content"><span class="fas fa-key"></span><a href="{% url 'login' %}"> Login </a> <span class="fas fa-user"></span><a href="{% url 'register' %}"> Register</a> </p>
+      {% else %}
+        <p class="account-content"><span class="fas fa-key"></span><a href="{% url 'logout' %}"> Logout </a> <span class="fas fa-user"></span><a href="{% url 'dashboard' %}"> Dashboard</a></p>
+      {% endif %}
+      </div>
+  </div>

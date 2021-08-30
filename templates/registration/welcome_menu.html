@@ -1,0 +1,5 @@
+<div class="welcome_menu">
+    {% if request.user.is_authenticated %}
+    <p>Welcome back, {{ request.user }} | <a href="{% url 'logout' %}">Logout</a></p>
+    {% endif %}
+</div>

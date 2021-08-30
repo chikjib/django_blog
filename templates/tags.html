@@ -1,0 +1,73 @@
+{% extends 'frontend/layouts/base.html' %} 
+{% block content %} 
+{% load static %}
+{% load humanize %}
+{% include 'frontend/layouts/header_ad.html' %} 
+
+ <!-- HeadLine Container -->
+<div class="headline-container">
+    <!-- HeadLines -->
+    <div class="headline"></div>
+    <h4 class="headline-title">
+      <span class="headline-title">{{ tag_title.name }}</span>
+    </h4>
+  </div>
+  <!-- HeadLine Container Ends -->
+
+  <!-- HeadLine Contents --> 
+ 
+
+      <!-- Category Posts -->
+   <div class="category-container">
+  <div class="category-posts infinite-container">
+    {% if page_obj %}
+      {% for post in page_obj %}
+    <div class="category-post-items infinite-item">
+      <a href="{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}"><img src="{{ post.featured_image.url }}" alt="" width="400" height="240" /></a>
+      <div class="category-post-detail">
+      <div class="sponsored-cat">
+        <span class="cat">{{ post.category }}</span> / <span class="time">{{ post.created_at|naturaltime }}</span>
+      </div>
+      <a href="{% url 'post' post.created_at|date:'Y' post.created_at|date:'m' post.created_at|date:'d' post.slug %}"
+        >{{ post.title }}</a
+      >
+</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="category-post-items infinite-item">
+        <img src="/media/not_found.jpg " alt="No Result Found!" width="700" height="300" />
+       
+      </div>
+    {% endif%}
+  </div>
+
+    <!-- HEADLINE SIDEBAR -->
+    <div class="headline-sidebar" id="category-post-sidebar">
+      {% include 'frontend/layouts/single-sidebar_ad.html' %}
+      
+    </div>
+  </div>
+
+  <div class="loading" style="display: none;">
+    Loading...
+</div>
+{% if page_obj.has_next %}  
+<div class="load-more-btn-container">        
+<a class="load-more-btn infinite-more-link" href="?page={{ page_obj.next_page_number }}">More Posts</a>
+</div>
+{% endif %}
+
+
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}
